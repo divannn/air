@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.id.example.air</groupId>
+	<artifactId>TourDeMobileFlex</artifactId>
+	<version>1.0.2</version>
+	<packaging>air</packaging>
+
+    <description>AIR mobile application using flexmojos 6.0.1 and Apache SDK 4.11</description>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<build-helper-maven-plugin.version>1.8</build-helper-maven-plugin.version>
+		<flexmojos-maven-plugin.version>6.0.1</flexmojos-maven-plugin.version>
+		<flex.sdk.version>4.11.0.20131017</flex.sdk.version>
+		<air.sdk.version>3.9</air.sdk.version>
+		<keystore.file>${basedir}/src/main/TourDeMobileFlex.p12</keystore.file>
+		<keystore.password>TourDeMobileFlex</keystore.password>
+	</properties>
+
+	<dependencies>
+		<!-- Flex framework version-->
+		<dependency>
+			<groupId>com.adobe.flex.framework.air</groupId>
+			<artifactId>air-framework</artifactId>
+			<version>${flex.sdk.version}</version>
+			<type>pom</type>
+		</dependency>
+		<!--<dependency>
+			<groupId>com.adobe.air.framework</groupId>
+			<artifactId>common-framework</artifactId>
+			<version>${air.sdk.version}</version>
+			<type>pom</type>
+		</dependency>-->
+
+		<dependency>
+			<groupId>com.adobe.flex.framework.mobile</groupId>
+			<artifactId>mobilecomponents</artifactId>
+			<version>${flex.sdk.version}</version>
+			<type>swc</type>
+		</dependency>
+		<dependency>
+			<groupId>com.adobe.flex.framework.themes</groupId>
+			<artifactId>mobile</artifactId>
+			<version>${flex.sdk.version}</version>
+			<type>swc</type>
+			<scope>theme</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<outputDirectory>${project.build.directory}</outputDirectory>
+		<sourceDirectory>src/main/flex</sourceDirectory>
+		<!--testSourceDirectory>src/test/flex</testSourceDirectory-->
+
+		<plugins>
+			<!-- Attach "assets" as source folder (due to flexmojos 4.x changes)-->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>${build-helper-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>add-source-path</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>${basedir}/src/main/assets</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>net.flexmojos.oss</groupId>
+				<artifactId>flexmojos-maven-plugin</artifactId>
+				<version>${flexmojos-maven-plugin.version}</version>
+				<extensions>true</extensions>
+				<configuration>
+					<debug>true</debug>
+					<!--stripVersion>true</stripVersion-->
+					<!--<loadConfig>${settings.localRepository}/com/adobe/flex/framework/framework/${flex.sdk.version}/configs_zip/airmobile-config.xml</loadConfig>-->
+					<!-- Main application file -->
+					<sourceFile>TourDeMobileFlex.mxml</sourceFile>
+					<descriptorTemplate>${basedir}/src/main/resources/TourDeMobileFlex-app.xml</descriptorTemplate>
+
+					<keystore>${keystore.file}</keystore>
+					<storepass>${keystore.password}</storepass>
+
+					<!--optionally include files in the AIR package -->
+					<!--includeFileSets>
+						<fileSet>
+							<directory>src/main/resources</directory>
+							<includes>
+								<include>*.*</include>
+							</includes>
+						</fileSet>
+					</includeFileSets-->
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>com.adobe.flex</groupId>
+						<artifactId>compiler</artifactId>
+						<version>${flex.sdk.version}</version>
+						<type>pom</type>
+					</dependency>
+					<dependency>
+						<groupId>com.adobe.air.compiler</groupId>
+						<artifactId>adt</artifactId>
+						<version>${air.sdk.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>com.adobe.air</groupId>
+						<artifactId>compiler</artifactId>
+						<version>${air.sdk.version}</version>
+						<type>pom</type>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+
+	<repositories>
+        <repository>
+            <id>Third Party Manual Jar Uploads</id>
+            <url>http://dpa-svn.corp.emc.com/nexus/content/repositories/thirdparty</url>
+        </repository>
+	</repositories>
+	<pluginRepositories>
+        <pluginRepository>
+            <id>Third Party Manual Jar Uploads</id>
+            <url>http://dpa-svn.corp.emc.com/nexus/content/repositories/thirdparty</url>
+        </pluginRepository>
+	</pluginRepositories>
+
+</project>
