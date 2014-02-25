@@ -158,9 +158,9 @@
 						<argument>${keystore.password}</argument>
 						<argument>-keystore</argument>
 						<argument>${keystore.file}</argument>
-						<argument>DPAMobile.apk</argument>
-						<argument>DPAMobile-app.xml</argument>
-						<argument>DPAMobile-1.0.0-SNAPSHOT.swf</argument>
+						<argument>BlueChips.apk</argument>
+						<argument>BlueChips-app.xml</argument>
+						<argument>BlueChips-1.0.0-SNAPSHOT.swf</argument>
                         <!-->Other assets to package<-->
 						<argument>icons</argument>
 					</arguments>
