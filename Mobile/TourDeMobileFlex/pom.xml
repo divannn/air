@@ -129,13 +129,13 @@
 
 	<repositories>
         <repository>
-            <id>Third Party Manual Jar Uploads</id>
+            <id>Third Party Repo</id>
             <url>http://dpa-svn.corp.emc.com/nexus/content/repositories/thirdparty</url>
         </repository>
 	</repositories>
 	<pluginRepositories>
         <pluginRepository>
-            <id>Third Party Manual Jar Uploads</id>
+            <id>Third Party Repo</id>
             <url>http://dpa-svn.corp.emc.com/nexus/content/repositories/thirdparty</url>
         </pluginRepository>
 	</pluginRepositories>

@@ -7,7 +7,8 @@
 	<groupId>com.id.example.air</groupId>
 	<artifactId>BlueChips</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
-	<packaging>air</packaging>
+	<!--packaging>air</packaging-->
+	<packaging>swf</packaging>
 
     <description>AIR mobile application using flexmojos 6.0.1 and Apache SDK 4.11</description>
 
@@ -15,10 +16,16 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<build-helper-maven-plugin.version>1.8</build-helper-maven-plugin.version>
 		<flexmojos-maven-plugin.version>6.0.1</flexmojos-maven-plugin.version>
+		<exec-maven-plugin.version>1.2.1</exec-maven-plugin.version>
+
 		<flex.sdk.version>4.11.0.20131017</flex.sdk.version>
 		<air.sdk.version>3.9</air.sdk.version>
+
+        <keystore.type>pkcs12</keystore.type>
 		<keystore.file>${basedir}/src/main/assets/BlueChips.p12</keystore.file>
 		<keystore.password>BlueChips</keystore.password>
+
+		<FLEX_HOME>C:/Tools/FlexSdk/flexSdk-4.11</FLEX_HOME>
 	</properties>
 
 	<dependencies>
@@ -124,6 +131,42 @@
 					</dependency>
 				</dependencies>
 			</plugin>
+
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>${exec-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals><goal>exec</goal></goals>
+					</execution>
+				</executions>
+				<configuration>
+					<executable>java</executable>
+					<workingDirectory>${project.build.directory}</workingDirectory>
+					<arguments>
+						<argument>-jar</argument>
+						<argument>${FLEX_HOME}/lib/adt.jar</argument>
+						<argument>-package</argument>
+						<argument>-target</argument>
+						<argument>apk-captive-runtime</argument>
+						<argument>-storetype</argument>
+						<argument>${keystore.type}</argument>
+						<argument>-storepass</argument>
+						<argument>${keystore.password}</argument>
+						<argument>-keystore</argument>
+						<argument>${keystore.file}</argument>
+						<argument>DPAMobile.apk</argument>
+						<argument>DPAMobile-app.xml</argument>
+						<argument>DPAMobile-1.0.0-SNAPSHOT.swf</argument>
+                        <!-->Other assets to package<-->
+						<argument>icons</argument>
+					</arguments>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 
